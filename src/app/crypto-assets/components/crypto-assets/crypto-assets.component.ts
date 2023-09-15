@@ -70,8 +70,4 @@ export class CryptoAssetsComponent implements OnInit {
     this.searchControl.reset();
     this.cryptoAssetsService.toggleAssetFavorite(asset);
   }
-
-  sortAssetsByFavorite() {
-    this.store.dispatch(CryptoAssetsAction.sortCryptoAssets());
-  }
 }
