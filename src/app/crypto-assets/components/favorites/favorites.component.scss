@@ -1,0 +1,8 @@
+h1 {
+  font-size: 5rem;
+  margin-top: 2rem;
+
+  @media (max-width: 425px) {
+    font-size: 2rem;
+  }
+}

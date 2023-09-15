@@ -1,0 +1,7 @@
+<input [formControl]="searchControl" nz-input placeholder="Search Assets" nzSize="large" />
+<ng-container *ngIf="assets; else errorTemplate">
+  <app-table-data [assets]="assets" (assetFavoriteToggled)="toggleAsset($event)"></app-table-data>
+</ng-container>
+<ng-template #errorTemplate>
+  <h3>Error Occurred, please reload!</h3>
+</ng-template>

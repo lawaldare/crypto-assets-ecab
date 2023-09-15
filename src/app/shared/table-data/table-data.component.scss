@@ -1,0 +1,27 @@
+nz-table {
+  margin-top: 3rem;
+
+  th {
+    font-weight: 700;
+  }
+}
+
+ant-table.ant-table-bordered
+  > .ant-table-container
+  > .ant-table-content
+  > table
+  > thead
+  > tr
+  > th {
+  font-weight: 700;
+}
+
+ant-table.ant-table-bordered
+  > .ant-table-container
+  > .ant-table-content
+  > table
+  > tbody
+  > tr
+  > td.asset-name-cell {
+  font-weight: 700;
+}

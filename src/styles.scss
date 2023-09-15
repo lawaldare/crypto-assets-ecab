@@ -1,1 +1,66 @@
 /* You can add global styles to this file, and also import other style files */
+
+:root {
+  --primary-color: #001628;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 10px;
+}
+
+.container {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  width: 100%;
+  padding-right: calc(var(--bs-gutter-x) * 0.5);
+  padding-left: calc(var(--bs-gutter-x) * 0.5);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1320px;
+  }
+}
+
+.anticon {
+  cursor: pointer;
+}
+
+.ant-table-tbody > tr > td.asset-name-cell {
+  span:nth-child(1) {
+    font-weight: 700;
+    margin-right: 7px;
+  }
+
+  span:nth-child(2) {
+    color: gray;
+  }
+}

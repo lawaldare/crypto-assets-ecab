@@ -1,0 +1,26 @@
+<nz-table #assetsTable [nzData]="assets" nzBordered nzShowSizeChanger [nzPageSize]="50" [nzScroll]="{ x: '720px' }">
+  <thead>
+    <tr>
+      <th style="width: 50px;"></th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Volume (1hr)</th>
+      <th>Volume (24hr)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of assetsTable.data; let i = index">
+      <td>
+        <span nz-tooltip [nzTooltipTitle]="data.is_favorite ? 'Remove from favorite' : 'Add to favorite'" nz-icon
+          nzType="star" [nzTheme]="data.is_favorite ? 'fill' : 'outline'" (click)="toggle(data)"></span>
+      </td>
+      <td class="asset-name-cell">
+        <span>{{ data.name }}</span>
+        <span>{{ data.asset_id }}</span>
+      </td>
+      <td>{{ data.price_usd | currency: 'USD' }}</td>
+      <td>{{ data.volume_1hrs_usd | currency: 'USD' }}</td>
+      <td>{{ data.volume_1day_usd | currency: 'USD' }}</td>
+    </tr>
+  </tbody>
+</nz-table>

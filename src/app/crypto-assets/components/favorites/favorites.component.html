@@ -1,0 +1,10 @@
+<ng-container *ngIf="assets$ | async as assets">
+  <ng-container *ngIf="assets.length; else emptyTemplate">
+    <app-table-data [assets]="assets" (assetFavoriteToggled)="toggleAsset($event)"></app-table-data>
+  </ng-container>
+  <ng-template #emptyTemplate>
+    <h1>No Favourite assets</h1>
+    <button nz-button nzType="primary" routerLink="/assets">Create your own favorite</button>
+  </ng-template>
+
+</ng-container>
