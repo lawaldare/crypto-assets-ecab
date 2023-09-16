@@ -20,7 +20,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map((key) => {
   return i;
 });
 
-fdescribe('TableDataComponent', () => {
+describe('TableDataComponent', () => {
   let component: TableDataComponent;
   let fixture: ComponentFixture<TableDataComponent>;
 
