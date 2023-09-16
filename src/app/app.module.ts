@@ -7,7 +7,7 @@ import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { en_US } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
@@ -22,6 +22,7 @@ import {
 } from './state/crypto-assets.reducer';
 import { CryptoAssetsComponent } from './components/crypto-assets/crypto-assets.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
+import { SharedModule } from './shared/shared.module';
 
 registerLocaleData(en);
 
@@ -35,9 +36,10 @@ registerLocaleData(en);
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     ZoroModule,
+    SharedModule,
     BrowserAnimationsModule,
     StoreModule.forFeature(CRYPTOASSETS_STATE_KEY, cryptoAssetsReducer),
     EffectsModule.forFeature([CryptoAssetsEffects]),

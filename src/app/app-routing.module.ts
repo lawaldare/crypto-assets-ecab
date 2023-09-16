@@ -10,7 +10,7 @@ const routes: Routes = [
     component: CryptoAssetsComponent,
   },
   {
-    path: 'favorites',
+    path: 'assets/favorites',
     component: FavoritesComponent,
   },
   { path: '**', pathMatch: 'full', redirectTo: 'assets' },

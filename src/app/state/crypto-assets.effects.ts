@@ -8,6 +8,7 @@ import {
   mergeMap,
   of,
   switchMap,
+  take,
   tap,
 } from 'rxjs';
 import {
@@ -32,17 +33,14 @@ export class CryptoAssetsEffects {
       switchMap(() =>
         this.cryptoAssetService.getAssets().pipe(
           mergeMap((assets: CryptoAsset[]) => {
-            console.log('mergeMap hello');
-
             return this.updateResponseWithFavourite(assets);
           }),
-          switchMap((assets: CryptoAsset[]) => {
+          take(1),
+          map((assets: CryptoAsset[]) => {
             console.log('hello');
-            return [
-              CryptoAssetsAction.getCryptoAssetsSuccess({
-                params: { assets },
-              }),
-            ];
+            return CryptoAssetsAction.getCryptoAssetsSuccess({
+              params: { assets },
+            });
           }),
           catchError(() => {
             this.cryptoAssetService.alertMessage =
