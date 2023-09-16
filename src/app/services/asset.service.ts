@@ -1,16 +1,18 @@
-import { environment } from './../../../environments/enviroment';
+import { environment } from '../../environments/enviroment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AssetIcon, CryptoAsset } from '../models/crypto-asset';
 import { CryptoAssetsState } from '../state/crypto-assets.model';
 import { Store } from '@ngrx/store';
 import { CryptoAssetsAction } from '../state/crypto-assets.actions';
+import { CryptoAsset } from '../models/crypto-asset';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CryptoAssetService {
+  public alertMessage: string = 'Loading Crypto Assets...';
+
   constructor(
     private http: HttpClient,
     private store: Store<CryptoAssetsState>
@@ -39,6 +41,5 @@ export class CryptoAssetService {
       })
     );
     this.store.dispatch(CryptoAssetsAction.updateFavoriteAssets());
-    // this.store.dispatch(CryptoAssetsAction.sortCryptoAssets());
   }
 }

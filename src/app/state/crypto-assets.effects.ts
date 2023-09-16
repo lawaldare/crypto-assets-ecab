@@ -32,21 +32,29 @@ export class CryptoAssetsEffects {
       switchMap(() =>
         this.cryptoAssetService.getAssets().pipe(
           mergeMap((assets: CryptoAsset[]) => {
+            console.log('mergeMap hello');
+
             return this.updateResponseWithFavourite(assets);
           }),
-          map((assets: CryptoAsset[]) => {
-            console.log(assets);
-            return CryptoAssetsAction.getCryptoAssetsSuccess({
-              params: { assets },
-            });
+          switchMap((assets: CryptoAsset[]) => {
+            console.log('hello');
+            return [
+              CryptoAssetsAction.getCryptoAssetsSuccess({
+                params: { assets },
+              }),
+            ];
           }),
-          catchError(() => of(CryptoAssetsAction.getCryptoAssetsFail()))
+          catchError(() => {
+            this.cryptoAssetService.alertMessage =
+              'Error Occured, please reload!';
+            return of(CryptoAssetsAction.getCryptoAssetsFail());
+          })
         )
       )
     )
   );
 
-  updateResponseWithFavourite(
+  private updateResponseWithFavourite(
     assets: CryptoAsset[]
   ): Observable<CryptoAsset[]> {
     return this.store.select(CryptoAssetsSelectors.favoriteAssets).pipe(
@@ -65,5 +73,3 @@ export class CryptoAssetsEffects {
     );
   }
 }
-
-//https://s3.eu-central-1.amazonaws.com/bbxt-static-icons/type-id/png_32/

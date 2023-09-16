@@ -15,11 +15,23 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ZoroModule } from './zoro.module';
+import { CryptoAssetsEffects } from './state/crypto-assets.effects';
+import {
+  CRYPTOASSETS_STATE_KEY,
+  cryptoAssetsReducer,
+} from './state/crypto-assets.reducer';
+import { CryptoAssetsComponent } from './components/crypto-assets/crypto-assets.component';
+import { FavoritesComponent } from './components/favorites/favorites.component';
 
 registerLocaleData(en);
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent],
+  declarations: [
+    AppComponent,
+    NavbarComponent,
+    CryptoAssetsComponent,
+    FavoritesComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -27,6 +39,8 @@ registerLocaleData(en);
     HttpClientModule,
     ZoroModule,
     BrowserAnimationsModule,
+    StoreModule.forFeature(CRYPTOASSETS_STATE_KEY, cryptoAssetsReducer),
+    EffectsModule.forFeature([CryptoAssetsEffects]),
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({

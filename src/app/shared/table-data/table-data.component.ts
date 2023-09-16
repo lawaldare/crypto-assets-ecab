@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { CryptoAsset } from 'src/app/crypto-assets/models/crypto-asset';
-import { CryptoAssetsState } from 'src/app/crypto-assets/state/crypto-assets.model';
+import { CryptoAsset } from 'src/app/models/crypto-asset';
+import { CryptoAssetsState } from 'src/app/state/crypto-assets.model';
 
 @Component({
   selector: 'app-table-data',

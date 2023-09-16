@@ -18,6 +18,10 @@ const updateCryptoAssetFavorite = (
   return assets;
 };
 
+const saveCryptoAssetFavorite = (assets: CryptoAsset[]): CryptoAsset[] => {
+  return assets.filter((asset: CryptoAsset) => asset.is_favorite);
+};
+
 const initialState: CryptoAssetsState = {
   favoriteAssets: [],
 };
@@ -38,12 +42,9 @@ const reducer = createReducer(
   on(
     CryptoAssetsAction.updateFavoriteAssets,
     (state: CryptoAssetsState, action): CryptoAssetsState => {
-      const newFavoriteAssets = [...(state.assets ?? [])].filter(
-        (asset: CryptoAsset) => asset.is_favorite
-      );
       return {
         ...state,
-        favoriteAssets: newFavoriteAssets,
+        favoriteAssets: saveCryptoAssetFavorite([...(state.assets ?? [])]),
       };
     }
   ),
