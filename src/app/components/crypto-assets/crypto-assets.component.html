@@ -1,4 +1,6 @@
 <input [formControl]="searchControl" nz-input placeholder="Search Assets" nzSize="large" />
+<button nz-button nzType="primary" (click)="sortAssetsByFavorite()">Sort Assets By Favorite</button>
+
 <ng-container *ngIf="assets; else errorTemplate">
   <app-table-data [assets]="assets" (assetFavoriteToggled)="toggleAsset($event)"></app-table-data>
 </ng-container>

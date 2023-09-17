@@ -45,7 +45,7 @@ const assestsMock = [
   },
 ];
 
-describe('CryptoAssetsComponent', () => {
+fdescribe('CryptoAssetsComponent', () => {
   let component: CryptoAssetsComponent;
   let fixture: ComponentFixture<CryptoAssetsComponent>;
   let store: MockStore;
@@ -136,5 +136,15 @@ describe('CryptoAssetsComponent', () => {
     console.log(component.assets);
 
     expect(component.assets?.length).toBe(1);
+  });
+
+  it('should dispatch `sortCryptoAssets` action when the button is clicked', async () => {
+    spyOn(store, 'dispatch');
+    fixture.detectChanges();
+    const button = fixture.debugElement.nativeElement.querySelector('button');
+    button.click();
+    expect(store.dispatch).toHaveBeenCalledWith(
+      CryptoAssetsAction.sortCryptoAssets()
+    );
   });
 });

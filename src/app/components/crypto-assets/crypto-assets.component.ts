@@ -13,6 +13,7 @@ import {
 } from 'rxjs';
 import { concatLatestFrom } from '@ngrx/effects';
 import { CryptoAsset } from 'src/app/models/crypto-asset';
+import { CryptoAssetsAction } from 'src/app/state/crypto-assets.actions';
 
 @Component({
   selector: 'app-assets',
@@ -64,6 +65,10 @@ export class CryptoAssetsComponent implements OnInit, OnDestroy {
   toggleAsset(asset: CryptoAsset) {
     this.searchControl.reset();
     this.cryptoAssetsService.toggleAssetFavorite(asset);
+  }
+
+  sortAssetsByFavorite() {
+    this.store.dispatch(CryptoAssetsAction.sortCryptoAssets());
   }
 
   ngOnDestroy(): void {
