@@ -45,7 +45,7 @@ const assestsMock = [
   },
 ];
 
-fdescribe('CryptoAssetsComponent', () => {
+describe('CryptoAssetsComponent', () => {
   let component: CryptoAssetsComponent;
   let fixture: ComponentFixture<CryptoAssetsComponent>;
   let store: MockStore;
