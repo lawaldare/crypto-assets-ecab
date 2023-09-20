@@ -37,7 +37,6 @@ export class CryptoAssetsEffects {
           }),
           take(1),
           map((assets: CryptoAsset[]) => {
-            console.log('hello');
             return CryptoAssetsAction.getCryptoAssetsSuccess({
               params: { assets },
             });
