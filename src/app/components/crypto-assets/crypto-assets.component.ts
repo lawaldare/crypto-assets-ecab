@@ -6,6 +6,7 @@ import { CryptoAssetsSelectors } from '../../state/crypto-assets.selectors';
 import { FormControl } from '@angular/forms';
 import {
   Subject,
+  combineLatest,
   debounceTime,
   distinctUntilChanged,
   filter,
@@ -34,15 +35,21 @@ export class CryptoAssetsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.store
-      .select(CryptoAssetsSelectors.assets)
-      .pipe(
-        filter((assets) => !!assets),
-        takeUntil(this.ngOnDestroy$)
-      )
-      .subscribe((assets) => {
+    combineLatest([
+      this.store.select(CryptoAssetsSelectors.assets),
+      this.route.queryParams,
+    ])
+      .pipe(takeUntil(this.ngOnDestroy$))
+      .subscribe(([assets, query]) => {
         this.assets = assets;
-        this.preserveLastSearchTerm();
+        const search = query['search'];
+        if (search) {
+          this.searchControl.setValue(search);
+          this.assets = this.filterItemsBySearchQuery(
+            search,
+            this.assets ?? []
+          );
+        }
       });
 
     this.searchControl.valueChanges
@@ -54,10 +61,8 @@ export class CryptoAssetsComponent implements OnInit, OnDestroy {
       )
       .subscribe(([value, assets]) => {
         if (value) {
-          localStorage.setItem('searchQuery', value);
           this.assets = this.filterItemsBySearchQuery(value, assets ?? []);
         } else {
-          localStorage.removeItem('searchQuery');
           this.assets = assets;
         }
         this.implementSearchQuery();
@@ -68,24 +73,15 @@ export class CryptoAssetsComponent implements OnInit, OnDestroy {
     if (this.searchControl.value) {
       this.router.navigate([], {
         relativeTo: this.route,
-        queryParams: { search: this.searchControl.value },
+        queryParams: {
+          search: this.searchControl.value,
+        },
         queryParamsHandling: 'merge',
       });
     } else {
       this.router.navigate([], {
         relativeTo: this.route,
       });
-    }
-  }
-
-  private preserveLastSearchTerm() {
-    const searchTerm = localStorage.getItem('searchQuery');
-    if (searchTerm) {
-      this.searchControl.setValue(searchTerm);
-      this.assets = this.filterItemsBySearchQuery(
-        searchTerm,
-        this.assets ?? []
-      );
     }
   }
 
