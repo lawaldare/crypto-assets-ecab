@@ -14,6 +14,7 @@ import {
 import { concatLatestFrom } from '@ngrx/effects';
 import { CryptoAsset } from 'src/app/models/crypto-asset';
 import { CryptoAssetsAction } from 'src/app/state/crypto-assets.actions';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-assets',
@@ -27,7 +28,9 @@ export class CryptoAssetsComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store<CryptoAssetsState>,
-    public cryptoAssetsService: CryptoAssetService
+    public cryptoAssetsService: CryptoAssetService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +42,7 @@ export class CryptoAssetsComponent implements OnInit, OnDestroy {
       )
       .subscribe((assets) => {
         this.assets = assets;
+        this.preserveLastSearchTerm();
       });
 
     this.searchControl.valueChanges
@@ -50,16 +54,48 @@ export class CryptoAssetsComponent implements OnInit, OnDestroy {
       )
       .subscribe(([value, assets]) => {
         if (value) {
-          this.assets = assets?.filter(
-            (asset) =>
-              asset.name
-                .toLocaleLowerCase()
-                .indexOf(value.toLocaleLowerCase()) !== -1
-          );
+          localStorage.setItem('searchQuery', value);
+          this.assets = this.filterItemsBySearchQuery(value, assets ?? []);
         } else {
+          localStorage.removeItem('searchQuery');
           this.assets = assets;
         }
+        this.implementSearchQuery();
       });
+  }
+
+  private implementSearchQuery() {
+    if (this.searchControl.value) {
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { search: this.searchControl.value },
+        queryParamsHandling: 'merge',
+      });
+    } else {
+      this.router.navigate([], {
+        relativeTo: this.route,
+      });
+    }
+  }
+
+  private preserveLastSearchTerm() {
+    const searchTerm = localStorage.getItem('searchQuery');
+    if (searchTerm) {
+      this.searchControl.setValue(searchTerm);
+      this.assets = this.filterItemsBySearchQuery(
+        searchTerm,
+        this.assets ?? []
+      );
+    }
+  }
+
+  private filterItemsBySearchQuery(searchQuery: string, items: any[]): any[] {
+    return items.filter(
+      (asset) =>
+        asset.name
+          .toLocaleLowerCase()
+          .indexOf(searchQuery.toLocaleLowerCase()) !== -1
+    );
   }
 
   toggleAsset(asset: CryptoAsset) {
