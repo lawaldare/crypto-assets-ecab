@@ -11,10 +11,7 @@ import {
   take,
   tap,
 } from 'rxjs';
-import {
-  CryptoAssetsAction,
-  CryptoAssetsEffect,
-} from './crypto-assets.actions';
+import { CryptoAssetsAction } from './crypto-assets.actions';
 import { CryptoAssetService } from '../services/asset.service';
 import { CryptoAsset } from '../models/crypto-asset';
 import { CryptoAssetsSelectors } from './crypto-assets.selectors';
@@ -29,7 +26,7 @@ export class CryptoAssetsEffects {
 
   getCryptoAssets$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(CryptoAssetsEffect.GET_CRYPTO_ASSETS),
+      ofType(CryptoAssetsAction.getCryptoAssets),
       switchMap(() =>
         this.cryptoAssetService.getAssets().pipe(
           mergeMap((assets: CryptoAsset[]) => {
@@ -37,14 +34,12 @@ export class CryptoAssetsEffects {
           }),
           take(1),
           map((assets: CryptoAsset[]) => {
-            return CryptoAssetsAction.getCryptoAssetsSuccess({
-              params: { assets },
-            });
+            return CryptoAssetsAction.getCryptoAssetsSuccess({ assets });
           }),
           catchError(() => {
             this.cryptoAssetService.alertMessage =
               'Error Occured, please reload!';
-            return of(CryptoAssetsAction.getCryptoAssetsFail());
+            return of(CryptoAssetsAction.getCryptoAssetsFailure());
           })
         )
       )

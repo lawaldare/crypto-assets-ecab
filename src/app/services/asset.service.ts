@@ -36,10 +36,8 @@ export class CryptoAssetService {
       is_favorite: !asset.is_favorite,
     };
     this.store.dispatch(
-      CryptoAssetsAction.toggleCryptoAssetFavorite({
-        params: { asset: updatedAsset },
-      })
+      CryptoAssetsAction.toggleCryptoAssetFavorite({ asset: updatedAsset })
     );
-    this.store.dispatch(CryptoAssetsAction.updateFavoriteAssets());
+    this.store.dispatch(CryptoAssetsAction.updateFavoriteAsset());
   }
 }

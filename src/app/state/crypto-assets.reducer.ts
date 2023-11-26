@@ -34,13 +34,13 @@ const reducer = createReducer(
     (state: CryptoAssetsState, action): CryptoAssetsState => {
       return {
         ...state,
-        assets: action.params.assets,
+        assets: action.assets,
       };
     }
   ),
 
   on(
-    CryptoAssetsAction.updateFavoriteAssets,
+    CryptoAssetsAction.updateFavoriteAsset,
     (state: CryptoAssetsState, action): CryptoAssetsState => {
       return {
         ...state,
@@ -67,7 +67,7 @@ const reducer = createReducer(
         ...state,
         assets: updateCryptoAssetFavorite(
           [...(state.assets ?? [])],
-          action.params.asset
+          action.asset
         ),
       };
     }
